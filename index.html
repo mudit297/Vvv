@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Shinchan ❤️</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(-45deg,#0f172a,#1e293b,#4c1d95,#be185d);
+background-size:400% 400%;
+animation:gradient 15s ease infinite;
+color:white;
+overflow:hidden; /* Entirely disables webpage scrolling */
+min-height:100vh;
+position: relative;
+}
+@keyframes gradient{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:1;}
+
+/* Game Container Entry */
+.game-container {
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+position:relative;
+z-index:2;
+}
+
+/* Glassmorphic Aesthetic */
+.glass{
+width:min(95%,500px);
+margin:0 auto;
+padding:25px;
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.2);
+border-radius:30px;
+text-align:center;
+box-shadow:0 20px 50px rgba(0,0,0,0.35);
+}
+
+/* 10 to 1 Countdown Screen */
+#countdown-screen {
+font-size: 5rem;
+font-weight: bold;
+text-shadow: 0 0 30px #f472b6;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+position: relative;
+z-index: 10;
+}
+.timer-number {
+font-size: 8rem;
+animation: pulse 1s infinite;
+color: #fbcfe8;
+}
+@keyframes pulse {
+0% { transform: scale(1); opacity: 1; }
+50% { transform: scale(1.2); opacity: 0.8; }
+100% { transform: scale(1); opacity: 1; }
+}
+
+/* Main Display Dashboard (Unified Card Deck) */
+#main-content {
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+width: 100%;
+position: relative;
+z-index: 2;
+padding: 20px;
+}
+
+.hero h1{font-size: 2.4rem; text-shadow:0 0 25px #f472b6; margin-bottom: 5px;}
+.hidden{display:none !important;}
+
+/* Fixated Image Carousel Station (Perfect Dimensions, Non-Scrolling) */
+.gallery-wrapper {
+width: 100%;
+margin: 15px auto;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.gallery{
+position:relative;
+width:100%;
+height: 280px; /* Locked frame bounds */
+overflow:hidden;
+border-radius:20px;
+border:3px solid rgba(255,255,255,0.6);
+box-shadow:0 12px 30px rgba(0,0,0,0.4);
+background: rgba(0,0,0,0.3);
+}
+.gallery img{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit: contain;
+opacity:0;
+transition:opacity 0.8s ease-in-out;
+}
+.gallery img.active {opacity:1; z-index: 2;}
+
+p{line-height:1.5; margin:10px 0; font-size:0.95rem;}
+.sub-panel {display:none; margin-top:12px; line-height:1.6; padding:15px; background:rgba(0,0,0,0.2); border-radius:15px; border:1px solid rgba(255,255,255,0.1); text-align:left;}
+
+/* Buttons */
+.btn{
+background:white;
+color:#be185d;
+border:none;
+padding:10px 20px;
+border-radius:50px;
+font-weight:bold;
+margin:5px;
+cursor:pointer;
+font-size:0.9rem;
+transition:transform 0.2s, box-shadow 0.2s;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+.btn:hover{transform:scale(1.05); box-shadow:0 8px 20px rgba(254,116,182,0.4);}
+
+/* Floating Streamers */
+.float{position:fixed;top:-50px;animation:fall linear infinite;pointer-events:none;z-index:0;}
+@keyframes fall{to{transform:translateY(120vh);opacity:0;}}
+
+/* Interactive Candle Mechanics */
+.candle-container {
+margin: 10px auto;
+width: 80px;
+height: 90px;
+position: relative;
+cursor: pointer;
+}
+.cake-base {
+width: 100px;
+height: 20px;
+background: #f472b6;
+border-radius: 8px 8px 0 0;
+position: absolute;
+bottom: 0;
+left: -10px;
+}
+.candle-stick {
+width: 12px;
+height: 45px;
+background: linear-gradient(to right, #67e8f9, #a5f3fc, #67e8f9);
+border-radius: 3px;
+position: absolute;
+bottom: 20px;
+left: 34px;
+}
+.candle-wick {
+width: 2px;
+height: 8px;
+background: #475569;
+position: absolute;
+top: -8px;
+left: 5px;
+}
+.candle-flame {
+width: 18px;
+height: 26px;
+background: linear-gradient(to bottom, #fbbf24, #ea580c);
+border-radius: 50% 50% 20% 20%;
+position: absolute;
+top: -32px;
+left: -3px;
+animation: flicker 0.6s infinite alternate;
+box-shadow: 0 0 15px #fbbf24;
+transform-origin: center bottom;
+transition: opacity 0.4s, transform 0.3s;
+}
+@keyframes flicker {
+0% { transform: scale(1) rotate(-2deg); }
+100% { transform: scale(1.1) rotate(3deg); }
+}
+.candle-flame.blown-out { opacity: 0; transform: scale(0); pointer-events: none; }
+</style>
+</head>
+<body>
+
+<canvas id="fw"></canvas>
+<div id="floater-container"></div>
+
+<div id="quiz-flow" class="game-container">
+    <div id="s1" class="glass">
+        <h2>💌 Hey Shinchan...</h2>
+        <p>I created something incredibly special just for you.<br>Would you like to step inside? ❤️</p>
+        <button class="btn" onclick="nextStage('s2')">Of course 🥰</button>
+        <button class="btn" onclick="alert('Access denied 😂 Only the birthday girl is allowed past this point!')">No 😔</button>
+    </div>
+
+    <div id="s2" class="glass hidden">
+        <h2>🐼 Quick Question</h2>
+        <p>Are you secretly a panda?</p>
+        <button class="btn" onclick="nextStage('s3')">Yes, and I'm adorable 🐼</button>
+        <button class="btn" onclick="alert('Then why are you constantly stealing my heart? ❤️ Try again!')">No 😌</button>
+    </div>
+
+    <div id="s3" class="glass hidden">
+        <h2>👑 Final Verification</h2>
+        <p>Who is officially the prettiest girl in the entire world?</p>
+        <button class="btn" onclick="startTenSecondCountdown()">Shinchan ❤️</button>
+        <button class="btn" onclick="alert('System Error: Incorrect Answer! 😜 Try that again.')">Someone Else</button>
+    </div>
+</div>
+
+<div id="countdown-screen" class="hidden">
+    <div style="font-size: 2rem; margin-bottom: 20px; color: #f472b6;">Hold on tightly... ❤️</div>
+    <div id="seconds-left" class="timer-number">10</div>
+</div>
+
+<div id="main-content" class="hidden">
+    
+    <div class="glass" id="dashboard-panel">
+        <section class="hero">
+            <h1>🎉 Happy Birthday Shinchan ❤️</h1>
+            <p style="color: #f472b6; font-weight: 500; font-size: 1rem; margin-top: 0;">You are my happiness, my everything ✨</p>
+        </section>
+
+        <div class="gallery-wrapper">
+            <div class="gallery" id="slideshow">
+                <img src="photo1.jpg" class="active" alt="Memory 1">
+                <img src="photo2.jpg" alt="Memory 2">
+                <img src="photo3.jpg" alt="Memory 3">
+                <img src="photo4.jpg" alt="Memory 4">
+                <img src="photo5.jpg" alt="Memory 5">
+                <img src="photo6.jpg" alt="Memory 6">
+            </div>
+        </div>
+
+        <div style="margin-top: 10px;">
+            <button class="btn" onclick="displayModule('letter')">Read Letter 💌</button>
+            <button class="btn" onclick="displayModule('candle')">Blow Candle 🎂</button>
+            <button class="btn" onclick="displayModule('gift')">Open Gift 🎁</button>
+        </div>
+
+        <div id="letter" class="sub-panel">
+            <p style="color: #fbcfe8;"><strong>Happy Birthday, Princess. 👑🎂</strong></p>
+            <p style="font-size: 0.9rem;">Thank you for filling my life with pure happiness. Every second spent next to you feels absolutely magical.</p>
+            <p style="font-style: italic; color: #f472b6; font-size: 0.9rem; margin-top: 5px;">"And just like the song says... I found the girl I was looking for." ❤️</p>
+        </div>
+
+        <div id="candle" class="sub-panel" style="text-align:center;">
+            <p style="font-size:0.9rem; margin-bottom:5px;">Click the flame to blow it out!</p>
+            <div class="candle-container" onclick="blowCandle()">
+                <div id="flame" class="candle-flame"></div>
+                <div class="candle-stick"><div class="candle-wick"></div></div>
+                <div class="cake-base"></div>
+            </div>
+            <p id="wish-status" style="color: #fbcfe8; font-size: 0.85rem;">🕯️ Make a beautiful wish...</p>
+        </div>
+
+        <div id="gift" class="sub-panel" style="text-align: center;">
+            <p style="color: #fbcfe8; font-size: 1rem;">💎 The greatest gift I will ever have in this life is YOU, Shinchan 💜</p>
+        </div>
+    </div>
+
+</div>
+
+<audio id="music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// Toggle steps through the opening quiz
+function nextStage(id){
+    document.querySelectorAll('#quiz-flow > div').forEach(d => d.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+}
+
+// 10 to 1 Countdown Sequence Controller
+function startTenSecondCountdown() {
+    document.getElementById('quiz-flow').classList.add('hidden');
+    document.getElementById('countdown-screen').classList.remove('hidden');
+    
+    let audio = document.getElementById('music');
+    audio.play().catch(err => console.log("Playback initialized."));
+
+    let countValue = 10;
+    let timerInterval = setInterval(() => {
+        countValue--;
+        if (countValue <= 0) {
+            clearInterval(timerInterval);
+            triggerBigBurstAndUnlock();
+        } else {
+            document.getElementById('seconds-left').innerText = countValue;
+        }
+    }, 1000);
+}
+
+// Triggers huge initial explosion on 0, then unlocks dashboard
+function triggerBigBurstAndUnlock(){
+    startCanvasFireworks();
+    
+    for (let i = 0; i < 6; i++) {
+        setTimeout(spawnFireworkBurst, i * 150);
+    }
+    
+    document.getElementById('countdown-screen').classList.add('hidden');
+    document.getElementById('main-content').classList.remove('hidden');
+    
+    startSlideshow();
+    startFloatingRain();
+}
+
+// FIX: Perfectly handles modular visibility toggling inside the locked screen format
+function displayModule(targetId) {
+    let selected = document.getElementById(targetId);
+    let currentlyVisible = selected.style.display === 'block';
+
+    // Collapse all open drawers first
+    document.querySelectorAll('.sub-panel').forEach(panel => {
+        panel.style.display = 'none';
+    });
+
+    // If it wasn't open, open it now cleanly
+    if (!currentlyVisible) {
+        selected.style.display = 'block';
+    }
+}
+
+// Interactive Candle Blowing mechanics
+function blowCandle() {
+    let flame = document.getElementById('flame');
+    let status = document.getElementById('wish-status');
+    
+    if(!flame.classList.contains('blown-out')) {
+        flame.classList.add('blown-out');
+        status.innerHTML = "✨ Your wish has been sent to the stars! 🌟";
+        
+        for(let i=0; i<4; i++) {
+            setTimeout(spawnFireworkBurst, i * 400);
+        }
+    }
+}
+
+// Clean, precise step-by-step sequential Slide Controller
+function startSlideshow() {
+    let images = document.querySelectorAll('#slideshow img');
+    let index = 0;
+    setInterval(() => {
+        images[index].classList.remove('active');
+        index = (index + 1) % images.length;
+        images[index].classList.add('active');
+    }, 3000); 
+}
+
+// Ambient Floating Streamers
+function startFloatingRain() {
+    const container = document.getElementById('floater-container');
+    setInterval(() => {
+        let e = document.createElement('div');
+        e.className = 'float';
+        e.innerHTML = Math.random() > 0.5 ? '❤️' : (Math.random() > 0.3 ? '💜' : '✨');
+        e.style.left = Math.random() * 100 + 'vw';
+        e.style.fontSize = (Math.random() * 14 + 12) + 'px';
+        e.style.animationDuration = (6 + Math.random() * 4) + 's';
+        container.appendChild(e);
+        
+        setTimeout(() => e.remove(), 10000);
+    }, 400);
+}
+
+// Particle Canvas Fireworks Engine
+let canvasActive = false;
+let dots = [];
+function startCanvasFireworks() {
+    if(canvasActive) return;
+    canvasActive = true;
+    const c = document.getElementById('fw'), ctx = c.getContext('2d');
+    function resize(){c.width = window.innerWidth; c.height = window.innerHeight;}
+    resize();
+    window.onresize = resize;
+    
+    setInterval(() => {
+        spawnFireworkBurst();
+    }, 1500);
+
+    function render(){
+        ctx.clearRect(0, 0, c.width, c.height);
+        dots.forEach((p, index) => {
+            ctx.fillStyle = p.color || `rgba(244, 114, 182, ${p.alpha / 60})`;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 2, 0, 6.28);
+            ctx.fill();
+            p.x += p.vx;
+            p.y += p.vy;
+            p.alpha--;
+            if(p.alpha < 1) dots.splice(index, 1);
+        });
+        requestAnimationFrame(render);
+    }
+    render();
+}
+
+function spawnFireworkBurst() {
+    const c = document.getElementById('fw');
+    if(!c) return;
+    let originX = Math.random() * c.width;
+    let originY = Math.random() * (c.height * 0.4);
+    let colors = ['rgba(244,114,182,', 'rgba(168,85,247,', 'rgba(56,189,248,', 'rgba(251,207,232,'];
+    let chosenColor = colors[Math.floor(Math.random() * colors.length)];
+    
+    for(let i=0; i<30; i++) {
+        let angle = Math.random() * Math.PI * 2;
+        let speed = Math.random() * 4 + 1.5;
+        dots.push({
+            x: originX,
+            y: originY,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            alpha: 60,
+            color: chosenColor
+        });
+    }
+}
+</script>
+</body>
+</html>
